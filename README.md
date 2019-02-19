@@ -1,1 +1,1 @@
-# gamer-slackbot
+# info-games-bot
