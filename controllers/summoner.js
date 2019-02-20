@@ -39,4 +39,3 @@ exports.getSummonerMasteryByChampion = async (req, res) => {
         console.error('error', error);
     }
 }
-
