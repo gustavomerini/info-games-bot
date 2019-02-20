@@ -11,6 +11,6 @@ router.get("/mastery/:name/:championName", summonerController.getSummonerMastery
 module.exports = router;
 
 router.post("/teste", (req, res) => {
-  console.log('teste', req.query, req.protocol, req);
-  return res.status(201).send(req.query.text)
+  console.log('teste', req.body.text);
+  return res.status(201).send(req.body.text)
 })
