@@ -33,7 +33,7 @@ exports.getSummonerMasteryByChampion = async (req, res) => {
         const championId = champions.data[data[0]].key
         const summoner = await axios.get(`${constants.API_URL}/summoner/v4/summoners/by-name/${data[1]}`);
         const championMastery = await axios.get(`${constants.API_URL}/champion-mastery/v4/champion-masteries/by-summoner/${summoner.data.id}/by-champion/${championId}`);
-        return res.status(201).send(`O invocador ${data[1]} tem ${championMastery.data.championLevel}, ${championMastery.data.championPoints} pontos de maestria com o campeão ${data[0]}`);
+        return res.status(201).send(`O invocador ${data[1]} tem nível ${championMastery.data.championLevel}, ${championMastery.data.championPoints} pontos de maestria com o campeão ${data[0]}`);
     } catch (error) {
         console.error('error', error);
     }
