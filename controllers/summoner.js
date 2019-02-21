@@ -28,10 +28,11 @@ exports.getSummonerMastery = async (req, res) => {
 
 exports.getSummonerMasteryByChampion = async (req, res) => {
     try {
-        const championId = champions.data[req.params.championName].key
-        const summoner = await axios.get(`${constants.API_URL}/summoner/v4/summoners/by-name/${req.params.name}`);
+        const data = req.body.text.split(" ");
+        console.log("data", data);
+        const championId = champions.data[data[0]].key
+        const summoner = await axios.get(`${constants.API_URL}/summoner/v4/summoners/by-name/${data[1]}`);
         const championMastery = await axios.get(`${constants.API_URL}/champion-mastery/v4/champion-masteries/by-summoner/${summoner.data.id}/by-champion/${championId}`);
-        console.log(summoner.data.id, championId);
         return res.status(201).send({
             response: championMastery.data
         })
