@@ -1,5 +1,5 @@
 const API_URL = "https://br1.api.riotgames.com/lol";
-const AUTH_TOKEN = "RGAPI-e1d77ccd-997a-4f61-8d68-e3642742cb02";
+const AUTH_TOKEN = "RGAPI-5902f3df-8220-46ce-a6d8-590dee37a785";
 
 module.exports = { 
     API_URL,
