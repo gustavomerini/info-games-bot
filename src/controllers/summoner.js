@@ -3,10 +3,10 @@ const constants = require("../../config");
 axios.defaults.headers.common["X-Riot-Token"] = constants.AUTH_TOKEN;
 const champions = require("../utils/champions.json");
 
-exports.getSummonerId = async (req, res, next) => {
+exports.getSummoner = async (req, res, next) => {
   try {
     const response = await axios.get(`${constants.API_URL}/summoner/v4/summoners/by-name/${req.params.name}`);
-    return res.status(201).send({
+    return res.status(200).send({
       response: response.data
     });
   } catch (error) {
@@ -18,7 +18,7 @@ exports.getSummonerMastery = async (req, res, next) => {
   try {
     const summoner = await axios.get(`${constants.API_URL}/summoner/v4/summoners/by-name/${req.params.name}`);
     const mastery = await axios.get(`${constants.API_URL}/champion-mastery/v4/champion-masteries/by-summoner/${summoner.data.id}`);
-    return res.status(201).send({
+    return res.status(200).send({
       response: mastery.data
     });
   } catch (error) {
@@ -38,7 +38,7 @@ exports.getSummonerMasteryByChampion = async (req, res, next) => {
       championMastery.data.championPoints
     } pontos de maestria com o campeão ${data[0]}`;
     axios.post("https://hooks.slack.com/services/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", { text: message });
-    return res.status(201).send(message);
+    return res.status(200).send(message);
   } catch (error) {
     next(error.response);
   }
