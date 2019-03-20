@@ -4,16 +4,17 @@ const { STATUS_CODES } = require("http");
 // eslint-disable-next-line
 const errorHandler = (err, req, res, next) => {
   const error = err.status === 401 || err instanceof APIError ? err : new InternalServerError();
-
-  if (process.env.NODE_ENV !== "production") {
-    // eslint-disable-next-line
-    console.log("-----> Unknown server error...");
-    // eslint-disable-next-line
-    console.log(err);
-  }
+  const { message = false } = err.data.status;
 
   if (err.name === "ValidationError") {
     return res.status(405).json(err);
+  }
+
+  if (message) {
+    return res.status(err.status).json({
+      code: err.status,
+      message: message
+    })
   }
 
   return res.status(error.status || 500).json({
