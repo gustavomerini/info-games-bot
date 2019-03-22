@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const errorHandler = require("./src/middleware/error-handller");
 
 // API route files
@@ -10,15 +10,9 @@ const SummonerApi = require("./src/api/summoner");
 
 const app = express();
 
-mongoose.connect(
-  config.database,
-  {
-    useMongoClient: true
-  },
-  error => {
-    if (error) console.log(error);
-  }
-);
+mongoose.connect(process.env.DATA_BASE, { useNewUrlParser: true }, error => {
+  if (error) console.log(error);
+});
 
 // View engine setup
 app.set("views", path.join(__dirname, "views"));

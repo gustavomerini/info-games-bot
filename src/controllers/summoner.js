@@ -1,11 +1,12 @@
 const axios = require("axios");
-const constants = require("../../config");
-axios.defaults.headers.common["X-Riot-Token"] = constants.AUTH_TOKEN;
+require("dotenv").config();
+axios.defaults.headers.common["X-Riot-Token"] = process.env.AUTH_TOKEN;
 const champions = require("../utils/champions.json");
+const URL = process.env.API_URL;
 
 exports.getSummoner = async (req, res, next) => {
   try {
-    const response = await axios.get(`${constants.API_URL}/summoner/v4/summoners/by-name/${req.params.name}`);
+    const response = await axios.get(`${URL}/summoner/v4/summoners/by-name/${req.params.name}`);
     return res.status(200).send({
       response: response.data
     });
@@ -16,8 +17,8 @@ exports.getSummoner = async (req, res, next) => {
 
 exports.getSummonerMastery = async (req, res, next) => {
   try {
-    const summoner = await axios.get(`${constants.API_URL}/summoner/v4/summoners/by-name/${req.params.name}`);
-    const mastery = await axios.get(`${constants.API_URL}/champion-mastery/v4/champion-masteries/by-summoner/${summoner.data.id}`);
+    const summoner = await axios.get(`${URL}/summoner/v4/summoners/by-name/${req.params.name}`);
+    const mastery = await axios.get(`${URL}/champion-mastery/v4/champion-masteries/by-summoner/${summoner.data.id}`);
     return res.status(200).send({
       response: mastery.data
     });
@@ -30,9 +31,9 @@ exports.getSummonerMasteryByChampion = async (req, res, next) => {
   try {
     const data = req.body.text.split(" ");
     const championId = champions.data[data[0]].key;
-    const summoner = await axios.get(`${constants.API_URL}/summoner/v4/summoners/by-name/${data[1]}`);
+    const summoner = await axios.get(`${URL}/summoner/v4/summoners/by-name/${data[1]}`);
     const championMastery = await axios.get(
-      `${constants.API_URL}/champion-mastery/v4/champion-masteries/by-summoner/${summoner.data.id}/by-champion/${championId}`
+      `${URL}/champion-mastery/v4/champion-masteries/by-summoner/${summoner.data.id}/by-champion/${championId}`
     );
     const message = `O invocador ${data[1]} tem maestria ${championMastery.data.championLevel} e ${
       championMastery.data.championPoints
