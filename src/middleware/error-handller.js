@@ -4,21 +4,15 @@ const { STATUS_CODES } = require("http");
 // eslint-disable-next-line
 const errorHandler = (err, req, res, next) => {
   const error = err.status === 401 || err instanceof APIError ? err : new InternalServerError();
-  const { message = false } = err.data.status;
+  const { status = false } = err.data;
 
-  if (err.name === "ValidationError") {
-    return res.status(405).json(err);
-  }
-
-  if (message) {
-    return res.status(err.status).json({
-      code: err.status,
-      message: message
-    })
+  if (status) {
+    return res.status(status.code).json({
+      message: status.message
+    });
   }
 
   return res.status(error.status || 500).json({
-    code: error.code || 500,
     message: error.message || STATUS_CODES[error.status]
   });
 };

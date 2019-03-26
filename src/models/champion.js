@@ -2,16 +2,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 module.exports = mongoose.model(
-  "Location",
+  "Champion",
   new Schema({
     name: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
-    version: Number,
+    version: String,
     id: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     key: Number,
     title: String,
