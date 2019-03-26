@@ -7,10 +7,11 @@ const errorHandler = require("./src/middleware/error-handller");
 
 // API route files
 const SummonerApi = require("./src/api/summoner");
+const ChampionApi = require("./src/api/champion");
 
 const app = express();
 
-mongoose.connect(process.env.DATA_BASE, { useNewUrlParser: true }, error => {
+mongoose.connect(process.env.DATA_BASE, { useNewUrlParser: true, useCreateIndex: true }, error => {
   if (error) console.log(error);
 });
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Endpoints declaration
 app.use("/api/summoner", SummonerApi);
+app.use("/api/champion", ChampionApi);
 
 // General Error handler
 app.use(errorHandler);
